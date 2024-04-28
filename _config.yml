@@ -1,11 +1,10 @@
-title: Jekyll Serial Programmer
+title: 0xsa Blog
 markdown: kramdown
 
 # for atom feed
 author:
-  name: Sharad Raj Singh Maurya
-  email: dev_sharad@outlook.com
-
+  name: 0xsa
+  email: saeedalzahrani103@gmail.com
 plugins:
   - jemoji
   - jekyll-seo-tag

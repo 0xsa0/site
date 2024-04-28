@@ -1,12 +1,12 @@
 name: hacker
-dp: ../pic.jpg
+dp: {{site.baseurl}}/pic.jpg
 description: "
   <p>
     Developed.
   </p>
   <br/>
 "
-email: dev_sharad@outlook.com
+email: saeedalzahrani103@gmail.com
 contact:
   - title: linkedin
     url: https://www.linkedin.com/in/saeed-alzahrani1
