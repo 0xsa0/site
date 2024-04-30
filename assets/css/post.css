@@ -19,6 +19,7 @@ body {
   font-family: "JetBrains Mono", monospace;
   line-height: 2rem;
   background-color: var(--gray-5);
+  font-size: 1rem;
 }
 .content a {
   color: cyan;
