@@ -219,11 +219,11 @@ Machine Account للإرسالها لـ DC لطلب ST للمستخدم للدخ
 
 ![after](../../img/posts/post_kerb-Del/con1/sliver-pass-the-tgs.png)
 
-1. /impersonateuser is the user we want to impersonate. 
-1. /msdsspn is the service principal name that WEB-1 is allowed to delegate to.
-1. /user is the principal allowed to perform the delegation.
-1. /ticket is the TGT for /user.
-1. /ptt to inject the ticket in session
+**impersonateuser**: The user we want to impersonate.
+**msdsspn**: The service principal name that WEB-1 is allowed to delegate to.
+**user**: The principal allowed to perform the delegation.
+**ticket**: The TGT for /user.
+**ptt**: To inject the ticket in session.
 
 
 باستخدام Rubeus s4u يتم تنفيذ S4U2Self ثم S4U2Proxy نيابة عن مستخدم نختاره في حالتنا admin-dom 
