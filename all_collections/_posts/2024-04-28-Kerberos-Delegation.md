@@ -20,20 +20,20 @@ categories: ["Kerberos", "Delegation", "Attack", "Active Directory","Cybersecuri
 ![del](../../img/posts/post_kerb-Del/del.png)
 
 الصورة السابقة توضح عمل التفويض افتراضا ان هنالك خادم File Share يتم التعامل معه عبر خادم ويب لا يمكن الوصول المباشر لخادم File Share من قبل المستخدمين عند تسجيل الدخول كـ يوزر test على جهاز المستخدم (USER PC) -   (Interactive authentication) يتم تخزين الـ credentials الخاصة بـ test في الـ lsass.exe لاستخدامها فيما بعد, عند محاولة الدخول على موقع الويب المستضاف على خادم الويب يقوم USER PC بعمل
-
  Network Authentication باستخدام credentials الخاصة بـ test المخزنة مسبقا داخل الـ lsass.exe
 
 > لا يتم تخزين الـ credentials في الخادم المراد الوصول له في حالة  Network Authentication.
+
+![dell](../../img/posts/post_kerb-Del/dell.png)
 
 الصورة السابقة توضح انه في حال عدم تفعيل الـ Delegation على
 
 WEB Server سيتم رفض الاتصال من قبل الـ File Share والسبب يعود ان الـ WEB Server لا يملك اي بيانات اعتماد للمستخدم لارسالها لخادم المشاركة.
 
 قامت مايكروسوفت بداية من Windows 2000 باطلاق اول نوع من انواع التفويض Unconstrained Delegation يليه Constrained Delegation في ـ Windows Server 2003 ثم في Windows 2012 تم تقديم 
-
 Resource Based Constrained Delegation (RBCD) الـ RBCD متفق في العمل مختلف في مكان اعداده, حيث انه يتم على الخادم الاخير في حالتنا يتم اعداده على ال File Share ومنه يتم تحديد الاصول التي تملك صلاحية التفويض من عدمه . 
 
-![dell](../../img/posts/post_kerb-Del/dell.png)
+
 > تتطلب الانواع Unconstrained و Constrained نوع خاص من الصلاحيات SeEnableDelegationPrivilege يتم اعطائه لـ اليوزر القائم على تشغيل خدمة الويب,  يمنح في العادة لـ enterprise and domain admins.
 
 ![delll](../../img/posts/post_kerb-Del/delll.png)
@@ -45,6 +45,8 @@ Resource Based Constrained Delegation (RBCD) الـ RBCD متفق في العم�
 كما هو واضح في الصورة السابقة عند تفعيل التفويض يستطيع WEB Server مخاطبة الـ DC لطلب Ticket من نوع (Service Ticket) ST نيابة عن المستخدم test واستخدامها للوصول الى خادم المشاركة بـ اعتباره المستخدم test. 
 
 >للإختصار سنتجاوز شرح عمل البروتوكلات الخاصة بالتحقق (SSP) 
+
+</br>
 
 ---
 
@@ -124,7 +126,10 @@ TGT Tickets المحفوظة عليه تعود الى اي مستخدم, مثل�
 ![after](../../img/posts/post_kerb-Del/uncon/uncon-psexec-dc01.png)
 >يتم تمرير k -no-pass- لعدم طلب كلمة مرور واستخدام التذكرة الموجودة مسبقا .
 
+</br>
+
 ---
+
 
 <h1 style="text-align:center; direction:ltr;">
 Constrained Delegation
@@ -214,10 +219,14 @@ Machine Account للإرسالها لـ DC لطلب ST للمستخدم للدخ
 ![after](../../img/posts/post_kerb-Del/con1/sliver-pass-the-tgs.png)
 
 <p style="direction:ltr;">
-/impersonateuser is the user we want to impersonate. </br>
-/msdsspn is the service principal name that WEB-1 is allowed to delegate to.</br>
-/user is the principal allowed to perform the delegation.</br>
-/ticket is the TGT for /user.</br>
+/impersonateuser is the user we want to impersonate. 
+</br>
+/msdsspn is the service principal name that WEB-1 is allowed to delegate to.
+</br>
+/user is the principal allowed to perform the delegation.
+</br>
+/ticket is the TGT for /user.
+</br>
 /ptt to inject the ticket in session
 </p>
 
@@ -229,6 +238,8 @@ Machine Account للإرسالها لـ DC لطلب ST للمستخدم للدخ
 ![after](../../img/posts/post_kerb-Del/con1/klist.png)
 
 بعد تنفيذ الهجوم نرى وجود ST للمستخدم admin-dom لـ خادم المشاركة fs-1 تمكنك من الانتقال له بصلاحيات عالية .
+
+</br>
 
 ---
 
@@ -243,7 +254,6 @@ Resource Based Constrained Delegation (RBCD)
 
 
 لا يتم تحديد نوع الخدمة كسابقة تستطيع طلب اي خدمة تريدها عليه ايضا لا يتم تحديد البروتوكول فهو يقبل NTLM و Kerberos يعتمد بشكل مباشر على نوع الإتصال ويتصرف بناء عليه ان كان NTLM سيقوم بتنفيذ 
-
  S4U2Self and S4U2Proxy وفي حالة Kerberos  سيتم تنفيذ S4U2Proxy .. يمكن إعداد الخادم المراد تفعيل النوع هذا عليه كالتالي :
 
 
@@ -268,7 +278,6 @@ msDS-AllowedToActOnBehalfOfOtherIdentity في خادم المشاركة عن ط�
 
 
 عند التمكن من الكتابة على اي Computer Object يجب ان ياتي RBCD كـ احد الطرق لتصعيد الصلاحية المثال القادم يفترض اننا استطعنا الكتابة على 
-
 (Computer Object (win10 بعد اختراقه ولكن بصلاحيات مستخدم طبيعي, يمكننا انشاء Machine Account وتفعيل الـ  RBCD على win10 واعطاء صلاحية التفويض لـ Machine Account المنشئة من قبلنا .
 
 ![after](../../img/posts/post_kerb-Del/RBCD/cuota.png)
