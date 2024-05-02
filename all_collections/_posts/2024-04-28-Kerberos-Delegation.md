@@ -46,7 +46,7 @@ Resource Based Constrained Delegation (RBCD) الـ RBCD متفق في العم�
 
 >للإختصار سنتجاوز شرح عمل البروتوكلات الخاصة بالتحقق (SSP) 
 
-</br>
+
 
 ---
 
@@ -91,6 +91,7 @@ UnConstrained Delegation
 عند اختراق خادم الويب نستطيع استغلال التفويض وتكون درجة الخطورة بناء على
 TGT Tickets المحفوظة عليه تعود الى اي مستخدم, مثلا يتناول سيناريو الاختراق بالاسفل استغلال TGT Ticket محفوظة,
 لـ Domain Admin account - (admin-dom) ..
+
 >جميع سيناريو الاختراقات المذكورة في المقال يتم تطبيقها عن طريق Sliver C2 + Rubeus وبعض الادوات المساعدة.
 
 
@@ -126,7 +127,7 @@ TGT Tickets المحفوظة عليه تعود الى اي مستخدم, مثل�
 ![after](../../img/posts/post_kerb-Del/uncon/uncon-psexec-dc01.png)
 >يتم تمرير k -no-pass- لعدم طلب كلمة مرور واستخدام التذكرة الموجودة مسبقا .
 
-</br>
+
 
 ---
 
@@ -218,17 +219,12 @@ Machine Account للإرسالها لـ DC لطلب ST للمستخدم للدخ
 
 ![after](../../img/posts/post_kerb-Del/con1/sliver-pass-the-tgs.png)
 
-<p style="direction:ltr;">
-/impersonateuser is the user we want to impersonate. 
-</br>
-/msdsspn is the service principal name that WEB-1 is allowed to delegate to.
-</br>
-/user is the principal allowed to perform the delegation.
-</br>
-/ticket is the TGT for /user.
-</br>
-/ptt to inject the ticket in session
-</p>
+1. /impersonateuser is the user we want to impersonate. 
+1. /msdsspn is the service principal name that WEB-1 is allowed to delegate to.
+1. /user is the principal allowed to perform the delegation.
+1. /ticket is the TGT for /user.
+1. /ptt to inject the ticket in session
+
 
 باستخدام Rubeus s4u يتم تنفيذ S4U2Self ثم S4U2Proxy نيابة عن مستخدم نختاره في حالتنا admin-dom 
 
@@ -239,7 +235,7 @@ Machine Account للإرسالها لـ DC لطلب ST للمستخدم للدخ
 
 بعد تنفيذ الهجوم نرى وجود ST للمستخدم admin-dom لـ خادم المشاركة fs-1 تمكنك من الانتقال له بصلاحيات عالية .
 
-</br>
+
 
 ---
 
